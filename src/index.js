@@ -1,4 +1,4 @@
-module.exports = function getZerosCount(number, base) {
+module.exports = function getZerosCount (number, base) {
   let crBase = base;
   let primePows = [];
   let prime = 2;
