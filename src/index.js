@@ -1,34 +1,28 @@
-module.exports = function getZerosCount (number, base) {
-  let crBase = base;
-  let primePows = [];
-  let prime = 2;
-  let obj = {prime: 0};
-  let arr= [];
-    while(crBase != 1){
-      if(crBase % prime == 0){
-        crBase /= prime;
-        primePows.push(prime);
-        if(!obj.hasOwnProperty(prime)){
-          obj[prime] = 0;
-        };
-        if(obj.hasOwnProperty(prime)){
-          obj[prime]++;
-        }
+module.exports = function getZerosCount(number, base) {
+  let multiplierArr = [];
+  let denominator = 2;
+  let multiplierObj = {};
+  let resultArr = [];
+  while (base != 1) {
+    if (base % denominator == 0) {
+      base /= denominator;
+      if (multiplierArr.indexOf(denominator) == -1) {
+        multiplierArr.push(denominator);
       }
-      else{
-        prime++;
-      }
+      multiplierObj.hasOwnProperty(denominator) ? multiplierObj[denominator]++ : (multiplierObj[denominator] = 1);
+    } else {
+      denominator++;
     }
-    for (let i = 0; i < primePows.length; i++) {
-      let pow = primePows[i];
-      let exp = primePows[i];
-      let tempResult = 0;
-        while(number > pow){
-        tempResult += Math.floor(number / pow);
-        pow *= exp;
-      }
-      arr.push(Math.floor(tempResult / obj[exp]));     
+  }
+  for (let i = 0; i < multiplierArr.length; i++) {
+    let currentDenominator = multiplierArr[i];
+    let x = multiplierArr[i];
+    let result = 0;
+    while (number > currentDenominator) {
+      result += Math.floor(number / currentDenominator);
+      currentDenominator *= x;
     }
-    let result = Math.min.apply('', arr);
-    return result;
-}
+    resultArr.push(Math.floor(result / multiplierObj[x]));
+  }
+  return Math.min(...resultArr);
+};
